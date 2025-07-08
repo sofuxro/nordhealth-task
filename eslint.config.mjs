@@ -14,6 +14,6 @@ export default withNuxt({
     }],
     'import/order': 'off',
     'vue/attribute-hyphenation': 'off',
-    'vue/singleline-html-element-content-newline': 'off'
+    'vue/singleline-html-element-content-newline': 'off',
   },
 })
