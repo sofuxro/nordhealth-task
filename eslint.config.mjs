@@ -7,7 +7,7 @@ export default withNuxt({
   rules: {
     ...plugin.configs['flat/recommended'].map(c => c.rules).reduce((acc, c) => ({ ...acc, ...c }), {}),
     'vue/multi-word-component-names': 'off',
-    'vue/max-attributes-per-line': [2, { singleline: 2 }],
+    'vue/max-attributes-per-line': [2, { singleline: 3 }],
     'vue/first-attribute-linebreak': ['error', {
       singleline: 'ignore',
       multiline: 'below',
@@ -15,5 +15,7 @@ export default withNuxt({
     'import/order': 'off',
     'vue/attribute-hyphenation': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/max-len': ['error', { code: 110 }],
+    "quotes": ["error", "single", { "avoidEscape": true }],
   },
 })

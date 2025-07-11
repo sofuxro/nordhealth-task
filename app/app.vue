@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import '@nordhealth/css'
 import '@nordhealth/components'
+import '@nordhealth/themes/lib/vet.css'
+
+if (useRoute().query?.theme === 'dark')
+  import('@nordhealth/themes/lib/vet-dark.css')
+else
+  import('@nordhealth/themes/lib/vet.css')
 </script>
 
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtRouteAnnouncer />
     <ClientOnly>
       <NuxtPage />
     </ClientOnly>
-  </div>
+  </NuxtLayout>
 </template>
