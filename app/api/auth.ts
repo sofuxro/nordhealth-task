@@ -1,7 +1,7 @@
 import type { AuthForm } from '~~/shared/types/auth'
 
 export default async (isSignup: boolean, form: AuthForm) => {
-  const { error } = isSignup
+  const { data, error } = isSignup
                       ? await useAsyncData(() => $fetch(
                         '/api/signup', { method: 'POST', body: form }
                       ))
@@ -14,5 +14,6 @@ export default async (isSignup: boolean, form: AuthForm) => {
               ? 'User already exists'
               : 'An error occurred'
 
+  console.log('Authentication successful:', data.value)
   return
 }

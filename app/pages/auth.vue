@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as z from 'zod'
+
 import NordWaves from '~/components/UIEffects/Waves.vue'
 import NordPasswordInput from '~/components/NordPasswordInput.vue'
 
@@ -6,10 +8,12 @@ import type { AuthForm } from '~~/shared/types/auth'
 
 import { signUp as signUpSEOMeta } from '~/assets/seo/index'
 import { useCustomStyle } from '~/composables/useCustomStyle'
-import * as z from 'zod'
+import AuthApi from '~/api/auth'
 
+definePageMeta({ layout: 'auth' })
 useHead(signUpSEOMeta)
 useCustomStyle()
+const { fetch: refreshSession } = useUserSession()
 
 /* ====================== Vars ====================== */
 
@@ -19,7 +23,7 @@ const isSignup = ref(true)
 const form = ref<AuthForm>({
   email: '',
   password: '',
-  checkbox: false,
+  optIn: false,
 })
 
 const formSchema = z.object({
@@ -50,20 +54,15 @@ const tryAuth = async () => {
 
   loading.value = true
 
-  const { error } = isSignup.value
-                      ? await useAsyncData(() => $fetch(
-                        '/api/signup', { method: 'POST', body: form.value }
-                      ))
-                      : await useAsyncData(() => $fetch(
-                        '/api/login',  { method: 'POST', body: form.value }
-                      ))
+  const error = await AuthApi(isSignup.value, form.value)
 
-  if (error.value)
-    errorMessages.value.email = error.value?.statusMessage === 'user_already_exists'
-                                ? 'User already exists'
-                                : 'An error occurred'
-  else
-    navigateTo('/')
+  if (error)
+    errorMessages.value.email = error
+  else {
+    // Refresh the session on client-side and redirect to the default page
+    await refreshSession()
+    await navigateTo('/')
+  }
 
   loading.value = false
 }
@@ -76,7 +75,7 @@ const toggleAuth = () => {
     // Reset form values
     form.value.email = ''
     form.value.password = ''
-    form.value.checkbox = false
+    form.value.optIn = false
     errorMessages.value = {}
 
     isSignup.value = !isSignup.value
@@ -129,13 +128,14 @@ watch(() => form.value.password, () => {
               <nord-checkbox
                 v-if="isSignup"
                 label="Receive occasional product updates and announcements"
-                @change="form.checkbox = ($event.target as HTMLInputElement).checked"
+                @change="form.optIn = ($event.target as HTMLInputElement).checked"
               />
 
               <nord-button
                 type="submit"
                 expand
                 variant="primary"
+                :loading="loading"
               >
                 Sign {{ isSignup ? 'up' : 'in' }}
               </nord-button>

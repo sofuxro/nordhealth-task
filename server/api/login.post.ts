@@ -12,5 +12,16 @@ export default eventHandler(async (event) => {
       statusMessage: error.code
     })
 
+  await setUserSession(event, {
+    user: {
+      email: data.user.email,
+      optIn: data.session.user.user_metadata.opt_in
+    },
+    secure: {
+      accessToken: data.session.access_token,
+      refreshToken: data.session.refresh_token
+    }
+  })
+  console.log('Login successful:', data)
   return { data }
 })

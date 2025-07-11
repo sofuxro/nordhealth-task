@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/test-utils', '@nuxtjs/supabase'],
+  modules: ['@nuxt/eslint', '@nuxt/test-utils', 'nuxt-auth-utils'],
   devtools: { enabled: true },
 
   app: {
@@ -26,12 +26,4 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   compatibilityDate: '2025-05-15',
-
-  supabase: {
-    redirectOptions: {
-      login: '/auth',
-      callback: '/profile',
-      exclude: []
-    }
-  }
 })
