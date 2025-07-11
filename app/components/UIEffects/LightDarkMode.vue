@@ -35,10 +35,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-.nord-light-dark-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-</style>

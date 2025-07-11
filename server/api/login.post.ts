@@ -12,6 +12,7 @@ export default eventHandler(async (event) => {
       statusMessage: error.code
     })
 
+  // Successful login, set the user session
   await setUserSession(event, {
     user: {
       email: data.user.email,
@@ -22,6 +23,6 @@ export default eventHandler(async (event) => {
       refreshToken: data.session.refresh_token
     }
   })
-  console.log('Login successful:', data)
+
   return { data }
 })
