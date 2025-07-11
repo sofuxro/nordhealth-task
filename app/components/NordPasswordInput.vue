@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const showPassword = ref(false)
 
+const { error } = defineProps<{
+  error: string | undefined
+}>()
+
 const password = defineModel<string>()
 
 </script>
@@ -13,6 +17,7 @@ const password = defineModel<string>()
       :type="showPassword ? 'text' : 'password'"
       placeholder="Secret password 123"
       expand
+      :error="error"
       @input="password = ($event.target as HTMLInputElement).value"
     >
       <!-- eslint-disable vue/no-deprecated-slot-attribute -->
