@@ -1,7 +1,8 @@
 import supabase from './utils/supabase'
+import type { AuthForm } from '~~/shared/types/auth'
 
 export default eventHandler(async (event) => {
-  const { email, password, checkbox: opt_in } = await readBody(event)
+  const { email, password, checkbox: opt_in }: AuthForm = await readBody(event)
 
   const { data, error } = await supabase.auth.signUp({
     email,

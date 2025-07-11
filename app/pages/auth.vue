@@ -2,6 +2,8 @@
 import NordWaves from '~/components/UIEffects/Waves.vue'
 import NordPasswordInput from '~/components/NordPasswordInput.vue'
 
+import type { AuthForm } from '~~/shared/types/auth'
+
 import { signUp as signUpSEOMeta } from '~/assets/seo/index'
 import { useCustomStyle } from '~/composables/useCustomStyle'
 import * as z from 'zod'
@@ -14,7 +16,7 @@ useCustomStyle()
 const formWrapper = useTemplateRef<HTMLDivElement>('formWrapper')
 const isSignup = ref(true)
 
-const form = ref({
+const form = ref<AuthForm>({
   email: '',
   password: '',
   checkbox: false,
@@ -32,7 +34,7 @@ const formSchema = z.object({
 });
 
 type formSchemaType = z.infer<typeof formSchema>
-const errorMessages = ref<Partial<formSchemaType> | null>(null)
+const errorMessages = ref<Partial<formSchemaType>>({})
 
 const loading = ref(false)
 
@@ -48,7 +50,7 @@ const tryAuth = async () => {
 
   loading.value = true
 
-  const { data, error } = isSignup.value
+  const { error } = isSignup.value
                       ? await useAsyncData(() => $fetch(
                         '/api/signup', { method: 'POST', body: form.value }
                       ))
@@ -57,9 +59,11 @@ const tryAuth = async () => {
                       ))
 
   if (error.value)
-    console.log(error.value?.statusMessage, error)
+    errorMessages.value.email = error.value?.statusMessage === 'user_already_exists'
+                                ? 'User already exists'
+                                : 'An error occurred'
   else
-    console.log('Sign up successful', data)
+    navigateTo('/')
 
   loading.value = false
 }
@@ -73,7 +77,7 @@ const toggleAuth = () => {
     form.value.email = ''
     form.value.password = ''
     form.value.checkbox = false
-    errorMessages.value = null
+    errorMessages.value = {}
 
     isSignup.value = !isSignup.value
 
@@ -114,9 +118,6 @@ watch(() => form.value.password, () => {
                 :value="form.email"
                 label="Email"
                 expand
-                required
-                hide-required
-                name="email"
                 type="email"
                 placeholder="funky.user@gmail.com"
                 :error="errorMessages?.email"
@@ -142,11 +143,9 @@ watch(() => form.value.password, () => {
           </form>
         </nord-card>
 
-        <nord-card v-if="isSignup" class="n-align-center">
-          Already have an account? <a @click="toggleAuth">Sign in</a>.
-        </nord-card>
-        <nord-card v-else class="n-align-center">
-          Don't have an account? <a @click="toggleAuth">Sign up</a>.
+        <nord-card class="n-align-center">
+          <template v-if="isSignup">Already have an account? <a @click="toggleAuth">Sign in</a>.</template>
+          <template v-else>Don't have an account? <a @click="toggleAuth">Sign up</a>.</template>
         </nord-card>
       </nord-stack>
     </div>
@@ -176,5 +175,9 @@ watch(() => form.value.password, () => {
 nord-stack {
   max-inline-size: 320px;
   margin: 0 auto;
+}
+
+nord-card a {
+  cursor: pointer;
 }
 </style>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+// TODO - move from url to localStorage
+
 const isDark = ref(false);
 
 const switchColorScheme = async (isDark: boolean) => {

@@ -13,11 +13,11 @@ const password = defineModel<string>()
   <div>
     <nord-input
       :value="password"
-      label="Password"
       :type="showPassword ? 'text' : 'password'"
-      placeholder="Secret password 123"
-      expand
       :error="error"
+      label="Password"
+      expand
+      placeholder="Secret password 123"
       @input="password = ($event.target as HTMLInputElement).value"
     >
       <!-- eslint-disable vue/no-deprecated-slot-attribute -->
