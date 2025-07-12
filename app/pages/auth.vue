@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import * as z from 'zod'
 
 import NordWaves from '~/components/UIEffects/Waves.vue'
 import NordPasswordInput from '~/components/NordPasswordInput.vue'
 
 import type { AuthForm } from '~~/shared/types/auth'
+import  type { formSchemaType } from '~/api/auth'
 
-import { signUp as signUpSEOMeta } from '~/assets/seo/index'
+import { signIn as signInSEOMeta } from '~/assets/seo/index'
 import { useCustomStyle } from '~/composables/useCustomStyle'
 import AuthApi from '~/api/auth'
+import { isEmptyObject } from '~~/shared/utils/helpers'
 
 definePageMeta({ layout: 'auth' })
-useHead(signUpSEOMeta)
+useHead(signInSEOMeta)
 useCustomStyle()
 const { fetch: refreshSession } = useUserSession()
 
@@ -26,18 +27,6 @@ const form = ref<AuthForm>({
   optIn: false,
 })
 
-const formSchema = z.object({
-  email: z.email('Invalid email address'),
-  password: z.string()
-    .min(8, 'Password must be at least 8 characters long')
-    .max(64, 'Password must not exceed 64 characters')
-    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .regex(/[0-9]/, 'Password must contain at least one number')
-    .regex(/[\W_]/, 'Password must contain at least one special character'),
-});
-
-type formSchemaType = z.infer<typeof formSchema>
 const errorMessages = ref<Partial<formSchemaType>>({})
 
 const loading = ref(false)
@@ -45,20 +34,11 @@ const loading = ref(false)
 /* ====================== Functions ====================== */
 
 const tryAuth = async () => {
-  // Validate form data
-  const result = formSchema.safeParse(form.value)
-  if (!result.success) {
-    errorMessages.value = z.flattenError(result.error).fieldErrors as Partial<formSchemaType>
-    return
-  }
-
   loading.value = true
 
-  const error = await AuthApi(isSignup.value, form.value)
+  errorMessages.value = await AuthApi(isSignup.value, form.value)
 
-  if (error)
-    errorMessages.value.email = error
-  else {
+  if (isEmptyObject(errorMessages.value)) {
     // Refresh the session on client-side and redirect to the default page
     await refreshSession()
     await navigateTo({ path: '/', query: useRoute().query })
@@ -67,16 +47,19 @@ const tryAuth = async () => {
   loading.value = false
 }
 
+const resetForm = () => {
+  form.value.email = ''
+  form.value.password = ''
+  form.value.optIn = false
+  errorMessages.value = {}
+}
+
 const toggleAuth = () => {
   // Animation for toggling auth state
   formWrapper.value?.classList.toggle('is-flip')
 
   setTimeout(() => {
-    // Reset form values
-    form.value.email = ''
-    form.value.password = ''
-    form.value.optIn = false
-    errorMessages.value = {}
+    resetForm()
 
     isSignup.value = !isSignup.value
 

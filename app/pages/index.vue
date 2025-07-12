@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import NordLightDarkMode from '~/components/UIEffects/LightDarkMode.vue'
 
+import { profile as profileSEOMeta } from '~/assets/seo/index'
 import type { AuthForm } from '~~/shared/types/auth'
 
 definePageMeta({ middleware: ['auth'] })
+useHead(profileSEOMeta)
 
 /* ====================== Vars =========================== */
 

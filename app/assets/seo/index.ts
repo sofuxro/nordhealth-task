@@ -1,6 +1,13 @@
-export const signUp = {
-  title: 'Sign up to Nordhealth',
+export const signIn = {
+  title: 'Sign in to Nordhealth',
   meta: [
-    { name: 'description', content: 'Sign up to Nordhealth' },
+    { name: 'description', content: 'Sign in to Nordhealth' },
+  ],
+}
+
+export const profile = {
+  title: 'Profile page',
+  meta: [
+    { name: 'description', content: 'Profile page' },
   ],
 }
