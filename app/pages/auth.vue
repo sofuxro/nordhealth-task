@@ -61,7 +61,7 @@ const tryAuth = async () => {
   else {
     // Refresh the session on client-side and redirect to the default page
     await refreshSession()
-    await navigateTo('/')
+    await navigateTo({ path: '/', query: useRoute().query })
   }
 
   loading.value = false

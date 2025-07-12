@@ -15,7 +15,7 @@ const localUser = user.value as Partial<AuthForm>
 
 const logout = async () => {
   await clearSession()
-  await navigateTo('/auth')
+  await navigateTo({ path: '/auth', query: useRoute().query })
 }
 </script>
 
