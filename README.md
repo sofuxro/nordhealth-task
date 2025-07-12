@@ -19,7 +19,7 @@
 <br/>
 
 <p align="center">
-<a href="https://www.storyblok.com/" target="_blank" alt="Storyblok"><img srg="https://nordhealth.com/assets/images/sharing/home.png" alt="Nordhealth" /></a>
+<a href="https://www.storyblok.com/" target="_blank" alt="Storyblok"><img width="120px" src="https://nordhealth.com/assets/images/sharing/home.png" alt="Nordhealth" /></a>
 </p>
 <br/><br/><br/>
 
