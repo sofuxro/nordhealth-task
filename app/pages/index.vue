@@ -248,7 +248,10 @@ const logout = async () => {
           </p>
           <p>Your journey to better health starts here!</p>
           <br>
-          <h3 v-if="localUser?.optIn">Thank you for opting in to our newsletter!</h3>
+
+          <h3 v-if="localUser?.optIn">
+            Thank you for opting in to receive occasional product updates and announcements!
+          </h3>
         </div>
       </nord-card>
     </nord-layout>

@@ -21,12 +21,8 @@ export default async (isSignup: boolean, form: AuthForm): Promise<Partial<formSc
   }
 
   const { error } = isSignup
-                      ? await useAsyncData(() => $fetch(
-                        '/api/signup', { method: 'POST', body: form }
-                      ))
-                      : await useAsyncData(() => $fetch(
-                        '/api/login',  { method: 'POST', body: form }
-                      ))
+    ? await useAsyncData(() => $fetch('/api/signup', { method: 'POST', body: form }))
+    : await useAsyncData(() => $fetch('/api/login',  { method: 'POST', body: form }))
 
   if (error.value)
     return { email:

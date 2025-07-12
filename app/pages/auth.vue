@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 import NordWaves from '~/components/UIEffects/Waves.vue'
 import NordPasswordInput from '~/components/NordPasswordInput.vue'
 
 import type { AuthForm } from '~~/shared/types/auth'
-import  type { formSchemaType } from '~/api/auth'
+import type { formSchemaType } from '~/api/auth'
 
 import { signIn as signInSEOMeta } from '~/assets/seo/index'
 import { useCustomStyle } from '~/composables/useCustomStyle'
@@ -64,7 +63,7 @@ const toggleAuth = () => {
     isSignup.value = !isSignup.value
 
     formWrapper.value?.classList.toggle('is-flip')
-  }, 400)
+  }, 400) // Match the duration of the CSS transition
 }
 
 const inputEmail = (event: Event) => {
