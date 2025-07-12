@@ -1,6 +1,6 @@
 // @vitest-environment nuxt
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { it, expect, describe, vi, beforeEach } from 'vitest'
+import { it, expect, describe, beforeEach } from 'vitest'
 
 
 import Auth from '~~/app/pages/auth.vue'
