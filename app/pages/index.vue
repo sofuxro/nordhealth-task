@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NordLightDarkMode from '~/components/UIEffects/LightDarkMode.vue'
 
-import type AuthForm from '~/shared/types/auth'
+import type { AuthForm } from '~~/shared/types/auth'
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -131,8 +131,8 @@ const logout = async () => {
             <span slot="footer">Just now at Nord Clinic</span>
           </nord-message>
           <nord-message unread>
-            New feature available! We’ve introduced a quick way to navigate between app views, actions, and more using a new
-            command menu.
+            New feature available! We’ve introduced a quick way to navigate between app views, actions,
+            and more using a new command menu.
             <span slot="footer">12 minutes ago</span>
           </nord-message>
           <nord-message unread>
@@ -166,7 +166,9 @@ const logout = async () => {
             <nord-icon name="navigation-tasks" size="m" color="rgba(255,255,255,0.85)" />
             <div class="n-counter" aria-hidden="true" style="position: absolute">4</div>
           </nord-button>
-          <h2 slot="header" class="n-typescale-l">My tasks <span class="n-font-weight n-color-text-weaker">(4)</span></h2>
+          <h2 slot="header" class="n-typescale-l">
+            My tasks <span class="n-font-weight n-color-text-weaker">(4)</span>
+          </h2>
           <nord-button slot="header-end" size="s" autofocus>
             <nord-icon slot="start" size="xxs" name="interface-add-small" />
             Create task
@@ -187,7 +189,9 @@ const logout = async () => {
             Call Anne and reschedule their visit.
             <span slot="footer">Finish by Friday, March 10</span>
           </nord-message>
-          <nord-dropdown-item> See all tasks<nord-icon slot="end" name="arrow-right-long" /> </nord-dropdown-item>
+          <nord-dropdown-item>
+            See all tasks<nord-icon slot="end" name="arrow-right-long" />
+          </nord-dropdown-item>
         </nord-dropdown>
         <nord-tooltip id="tasks-tooltip">4 unfinished tasks</nord-tooltip>
 
@@ -195,9 +199,9 @@ const logout = async () => {
 
         <nord-dropdown slot="end">
           <nord-button slot="toggle" variant="plain" aria-describedby="user-tooltip">
-            <nord-avatar style="transform: translateY(-1px)" :name="localUser?.email">AS</nord-avatar>
+            <nord-avatar style="transform: translateY(-1px)" :name="localUser?.email">OP</nord-avatar>
           </nord-button>
-          <nord-avatar slot="header" size="s" :name="localUser?.email">AS</nord-avatar>
+          <nord-avatar slot="header" size="s" :name="localUser?.email">OP</nord-avatar>
           <p slot="header" class="n-color-text-weak n-font-size-s">
             Signed in as <span class="n-font-weight-active">{{ localUser?.email }}</span>
           </p>
@@ -232,15 +236,13 @@ const logout = async () => {
 
       <nord-card class="full-height">
         <div class="scrollable">
-          <nord-stack>
-            <nord-banner variant="info">
-              This card component should fill the available height of the content area and have
-              internal scrolling where necessary.
-            </nord-banner>
-            <div>Stack item</div>
-            <div>Stack item</div>
-            <div>Stack item</div>
-          </nord-stack>
+          <h1>Welcome, {{ localUser?.email?.split('@')[0] }}</h1>
+          <p>We're thrilled to have you on board.</p>
+          <p>
+            Easily manage prescriptions, explore health products, and enjoy fast, reliable service.
+            All in one place.
+          </p>
+          <p>Your journey to better health starts here!</p>
         </div>
       </nord-card>
     </nord-layout>
@@ -254,33 +256,9 @@ const logout = async () => {
   position: absolute;
   inset-block-start: calc(var(--n-size-top-bar) + var(--n-space-l));
   inset-block-end: calc(var(--n-space-l));
-  /* if also footer is visible, use this instead of the above: */
-  /* inset-block-end: calc(var(--n-space-xxl) + var(--n-space-l)); */
   inset-inline-start: var(--n-space-l);
   inset-inline-end: var(--n-space-l);
   min-block-size: 100px;
   inline-size: auto;
-}
-
-.scrollable {
-  position: absolute;
-  padding: var(--n-space-m);
-  inset-block-start: 0;
-  inset-block-end: 0;
-  inset-inline-start: 0;
-  inset-inline-end: 0;
-  block-size: 100%;
-  overflow: auto;
-}
-
-nord-stack div {
-  background: var(--n-color-status-info-weak);
-  padding: var(--n-space-m);
-}
-
-@media (max-width: 768px) {
-  nord-top-bar nord-input[type="search"]:focus ~ nord-dropdown {
-    display: none;
-  }
 }
 </style>
