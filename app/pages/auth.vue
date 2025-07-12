@@ -83,6 +83,8 @@ watch(() => form.value.password, () => {
 })
 </script>
 
+<!-- ============================================ Template ============================================ -->
+
 <template>
   <div class="nord-signup-wrapper">
     <NordWaves />
@@ -134,6 +136,8 @@ watch(() => form.value.password, () => {
     </div>
   </div>
 </template>
+
+<!-- ============================================= Styles ============================================= -->
 
 <style scoped>
 .nord-signup-wrapper {

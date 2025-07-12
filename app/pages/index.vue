@@ -21,6 +21,8 @@ const logout = async () => {
 }
 </script>
 
+<!-- ============================================ Template ============================================ -->
+
 <template>
   <div>
     <!-- eslint-disable vue/no-deprecated-slot-attribute -->
@@ -252,6 +254,8 @@ const logout = async () => {
   <!-- eslint-enable -->
   </div>
 </template>
+
+<!-- ============================================= Styles ============================================= -->
 
 <style scoped>
 .full-height {
