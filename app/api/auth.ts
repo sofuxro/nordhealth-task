@@ -30,7 +30,7 @@ export default async (isSignup: boolean, form: AuthForm): Promise<Partial<formSc
 
   if (error.value)
     return { email:
-      error.value?.statusMessage === 'user_already_exists'
+      error.value?.statusCode === 422
       ? 'User already exists'
       : 'An error occurred'
     }
