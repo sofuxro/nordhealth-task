@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import '@nordhealth/css'
 import '@nordhealth/components'
+import type { ResolvableLink } from 'unhead/types'
 
-if (useRoute().query?.theme === 'dark')
-  import('@nordhealth/themes/lib/vet-dark.css')
-else
-  import('@nordhealth/themes/lib/vet.css')
+useHead({
+  link: [
+    {
+      id: 'nord-light', rel: 'stylesheet', href: '/css/vet.css',
+      tagPosition: 'bodyOpen'
+    } as ResolvableLink | { disabled: boolean },
+    {
+      id: 'nord-dark', rel: 'stylesheet', href: '/css/vet-dark.css',
+      tagPosition: 'bodyOpen'
+    } as ResolvableLink | { disabled: boolean },
+  ]
+})
 </script>
 
 <template>

@@ -1,22 +1,31 @@
 <script setup lang="ts">
-const isDark = ref(false);
+const isDark = ref(false)
+const darkLink = ref<HTMLLinkElement | null>(null)
+const lightLink = ref<HTMLLinkElement | null>(null)
 
-const switchColorScheme = async (isDark: boolean) => {
-  // We need to use page reload because of how nord vet light/dark themes are loaded.
-  await navigateTo({
-    query: { theme: isDark ? 'dark' : 'light' },
-  }, { external: true });
+const switchColorScheme = async (value: boolean) => {
+  isDark.value = value
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+
+  lightLink.value!.disabled = isDark.value
+  darkLink.value!.disabled = !isDark.value
+}
+
+const init = async () => {
+  if (localStorage.getItem('theme'))
+    isDark.value = localStorage.getItem('theme') === 'dark'
+  else
+    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  // We use link placed at the top of the <body> with disabled attribute to switch themes.
+  darkLink.value = document.getElementById('nord-dark') as HTMLLinkElement
+  lightLink.value = document.getElementById('nord-light') as HTMLLinkElement
+
+  switchColorScheme(isDark.value)
 }
 
 onMounted(() => {
-  if (useRoute().query?.theme === undefined)
-    // If the theme is not set in the query, we check the user's system preference.
-    // This will only run once until we set the theme in the query.
-    switchColorScheme(window.matchMedia('(prefers-color-scheme: dark)').matches)
-
-  else
-    // If the theme is already set in the query, we use that value.
-    isDark.value = useRoute().query?.theme === 'dark'
+  init();
 
   // Listen for changes in the user's system preference and switch the theme accordingly.
   window
