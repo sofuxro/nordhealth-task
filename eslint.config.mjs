@@ -16,6 +16,16 @@ export default withNuxt({
     'vue/attribute-hyphenation': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/max-len': ['error', { code: 110 }],
-    "quotes": ["error", "single", { "avoidEscape": true }],
+    'quotes': ['error', 'single', { 'avoidEscape': true }],
+
+    /**
+     * Disable rules that conflict with web components
+     *
+     * @example
+     *    <my-element>
+     *       <div slot="named">hello</div>
+     *    </my-element>
+     */
+    'vue/no-deprecated-slot-attribute': 'off',
   },
 })

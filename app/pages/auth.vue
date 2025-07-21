@@ -91,9 +91,7 @@ watch(() => form.value.password, () => {
     <div ref="formWrapper" class="nord-form-wrapper">
       <nord-stack>
         <nord-card padding="l">
-          <!-- eslint-disable vue/no-deprecated-slot-attribute -->
           <h1 slot="header">Sign {{ isSignup ? 'up' : 'in' }} to Nord Pharmacy</h1>
-          <!-- eslint-enable -->
 
           <form @submit.prevent="tryAuth">
             <nord-stack>

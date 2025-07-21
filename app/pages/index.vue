@@ -25,7 +25,6 @@ const logout = async () => {
 
 <template>
   <div>
-    <!-- eslint-disable vue/no-deprecated-slot-attribute -->
     <nord-layout ref="nord-layout">
       <nord-navigation ref="nord-navigation" slot="nav">
         <nord-dropdown slot="header" expand>
@@ -256,7 +255,6 @@ const logout = async () => {
       </nord-card>
     </nord-layout>
     <nord-command-menu ref="nord-command-menu" />
-  <!-- eslint-enable -->
   </div>
 </template>
 
