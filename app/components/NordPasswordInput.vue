@@ -25,6 +25,7 @@ const password = defineModel<string>()
         slot="end"
         aria-describedby="password-tooltip"
         square
+        type="button"
         @click.prevent="showPassword = !showPassword"
       >
         <nord-icon v-if="showPassword" name="interface-edit-on" />
